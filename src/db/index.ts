@@ -16,3 +16,6 @@ if (process.env.NODE_ENV === "production") {
 }
 
 export const db = prisma;
+
+
+// i can copy paste this file for any other projects
