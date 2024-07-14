@@ -1,28 +1,34 @@
 "use client";
 
-import { AspectRatio } from "@/components/ui/aspect-ratio";
-import NextImage from "next/image";
-import { cn, formatPrice } from "@/lib/utils";
-import { Rnd } from "react-rnd";
 import HandleComponent from "@/components/HandleComponent";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { cn, formatPrice } from "@/lib/utils";
+import NextImage from "next/image";
+import { Rnd } from "react-rnd";
 import { RadioGroup } from "@headlessui/react";
-import { COLORS, MODELS } from "@/validators/option-validator";
 import { useRef, useState } from "react";
+import {
+  COLORS,
+  FINISHES,
+  MATERIALS,
+  MODELS,
+} from "@/validators/option-validator";
 import { Label } from "@/components/ui/label";
 import {
   DropdownMenu,
   DropdownMenuContent,
-} from "@radix-ui/react-dropdown-menu";
-import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Check, ChevronsUpDown } from "lucide-react";
-import { MATERIALS, FINISHES } from "@/validators/option-validator";
 import { BASE_PRICE } from "@/config/products";
 import { useUploadThing } from "@/lib/uploadthing";
+import { useToast } from "@/components/ui/use-toast";
+import { useMutation } from "@tanstack/react-query";
+import { saveConfig as _saveConfig, SaveConfigArgs } from "./actions";
+import { useRouter } from "next/navigation";
 
 interface DesignConfiguratorProps {
   configId: string;
@@ -35,6 +41,26 @@ const DesignConfigurator = ({
   imageUrl,
   imageDimensions,
 }: DesignConfiguratorProps) => {
+  const { toast } = useToast();
+  const router = useRouter();
+
+  const { mutate: saveConfig, isPending } = useMutation({
+    mutationKey: ["save-config"],
+    mutationFn: async (args: SaveConfigArgs) => {
+      await Promise.all([saveConfiguration(), _saveConfig(args)]);
+    },
+    onError: () => {
+      toast({
+        title: "Something went wrong",
+        description: "There was an error on our end. Please try again.",
+        variant: "destructive",
+      });
+    },
+    onSuccess: () => {
+      router.push(`/configure/preview?id=${configId}`);
+    },
+  });
+
   const [options, setOptions] = useState<{
     color: (typeof COLORS)[number];
     model: (typeof MODELS.options)[number];
@@ -366,10 +392,10 @@ const DesignConfigurator = ({
                     100
                 )}
               </p>
-              {/* <Button
-                isLoading={isPending}
-                disabled={isPending}
-                loadingText="Saving"
+              <Button
+                // isLoading={isPending}
+                // disabled={isPending}
+                // loadingText="Saving"
                 onClick={() =>
                   saveConfig({
                     configId,
@@ -384,7 +410,7 @@ const DesignConfigurator = ({
               >
                 Continue
                 <ArrowRight className="h-4 w-4 ml-1.5 inline" />
-              </Button> */}
+              </Button>
             </div>
           </div>
         </div>
