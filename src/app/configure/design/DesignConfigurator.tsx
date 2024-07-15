@@ -35,7 +35,7 @@ interface DesignConfiguratorProps {
   imageUrl: string;
   imageDimensions: { width: number; height: number };
 }
-
+// Main
 const DesignConfigurator = ({
   configId,
   imageUrl,
@@ -44,7 +44,7 @@ const DesignConfigurator = ({
   const { toast } = useToast();
   const router = useRouter();
 
-  const { mutate: saveConfig, isPending } = useMutation({
+  const { mutate: saveConfig } = useMutation({
     mutationKey: ["save-config"],
     mutationFn: async (args: SaveConfigArgs) => {
       await Promise.all([saveConfiguration(), _saveConfig(args)]);
