@@ -22,6 +22,7 @@ export const createCheckoutSession = async ({
 
   const { getUser } = getKindeServerSession();
   const user = await getUser();
+  console.log(user);
 
   if (!user) {
     throw new Error("You need to be logged in");
@@ -43,11 +44,13 @@ export const createCheckoutSession = async ({
     },
   });
 
-  console.log(user.id, configuration.id);
+  //console.log(user.id, configuration.id);
 
   if (existingOrder) {
     order = existingOrder;
   } else {
+    debugger;
+    console.log("Create: ", user.id, "distance : ", configuration.id);
     order = await db.order.create({
       data: {
         amount: price / 100,
@@ -71,13 +74,13 @@ export const createCheckoutSession = async ({
     cancel_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/configure/preview?id=${configuration.id}`,
     payment_method_types: ["card", "paypal"],
     mode: "payment",
-    shipping_address_collection: { allowed_countries: ["DE", "US"] },
+    shipping_address_collection: { allowed_countries: ["DE"] },
     metadata: {
       userId: user.id,
       orderId: order.id,
     },
     line_items: [{ price: product.default_price as string, quantity: 1 }],
   });
-
+  console.log("url sent:", stripeSession);
   return { url: stripeSession.url };
 };
