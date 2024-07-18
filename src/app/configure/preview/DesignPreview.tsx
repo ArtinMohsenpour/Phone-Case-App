@@ -17,13 +17,14 @@ import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import LoginModal from "@/components/LoginModal";
 
 const DesignPreview = ({ configuration }: { configuration: Configuration }) => {
+
   const router = useRouter();
   const { toast } = useToast();
   const { id } = configuration;
   const { user } = useKindeBrowserClient();
   const [isLoginModalOpen, setIsLoginModalOpen] = useState<boolean>(false);
-
   const [showConfetti, setShowConfetti] = useState<boolean>(false);
+
   useEffect(() => setShowConfetti(true));
 
   const { color, model, finish, material } = configuration;
@@ -45,8 +46,12 @@ const DesignPreview = ({ configuration }: { configuration: Configuration }) => {
     mutationKey: ["get-checkout-session"],
     mutationFn: createCheckoutSession,
     onSuccess: ({ url }) => {
+      console.log("the function runs apearently");
       if (url) router.push(url);
-      else throw new Error("Unable to retrieve payment URL.");
+      else {
+        console.error("URL is undefined in onSuccess handler");
+        throw new Error("Unable to retrieve payment URL.");
+      }
     },
     onError: () => {
       toast({
@@ -59,10 +64,13 @@ const DesignPreview = ({ configuration }: { configuration: Configuration }) => {
 
   const handleCheckout = () => {
     if (user) {
-      // create payment session
+      // Log the user object to verify its structure
+      console.log("User object:", user);
+      console.log("User ID:", user.id);
+      console.log("Configuration ID:", id);
       createPaymentSession({ configId: id });
     } else {
-      // need to log in
+      console.log("User not logged in, opening login modal");
       localStorage.setItem("configurationId", id);
       setIsLoginModalOpen(true);
     }
