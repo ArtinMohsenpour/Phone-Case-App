@@ -11,6 +11,7 @@ export const createCheckoutSession = async ({
 }: {
   configId: string
 }) => {
+  
   const configuration = await db.configuration.findUnique({
     where: { id: configId },
   })
