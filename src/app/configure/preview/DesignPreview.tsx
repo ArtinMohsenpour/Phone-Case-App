@@ -24,7 +24,6 @@ const DesignPreview = ({ configuration }: { configuration: Configuration }) => {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState<boolean>(false);
 
   const [showConfetti, setShowConfetti] = useState<boolean>(false);
-
   useEffect(() => setShowConfetti(true));
 
   const { color, model, finish, material } = configuration;
@@ -81,7 +80,7 @@ const DesignPreview = ({ configuration }: { configuration: Configuration }) => {
         />
       </div>
 
-      {/* <LoginModal isOpen={isLoginModalOpen} setIsOpen={setIsLoginModalOpen} /> */}
+      <LoginModal isOpen={isLoginModalOpen} setIsOpen={setIsLoginModalOpen} />
 
       <div className="mt-20 flex flex-col items-center md:grid text-sm sm:grid-cols-12 sm:grid-rows-1 sm:gap-x-6 md:gap-x-8 lg:gap-x-12">
         <div className="md:col-span-4 lg:col-span-3 md:row-span-2 md:row-end-2">
@@ -149,7 +148,7 @@ const DesignPreview = ({ configuration }: { configuration: Configuration }) => {
                   </div>
                 ) : null}
 
-                <div className="my-2 h-px bg-gray-300" />
+                <div className="my-2 h-px bg-gray-200" />
 
                 <div className="flex items-center justify-between py-2">
                   <p className="font-semibold text-gray-900">Order total</p>
@@ -162,9 +161,6 @@ const DesignPreview = ({ configuration }: { configuration: Configuration }) => {
 
             <div className="mt-8 flex justify-end pb-12">
               <Button
-                disabled={true}
-                isLoading={true}
-                loadingText="Loading"
                 onClick={() => handleCheckout()}
                 className="px-4 sm:px-6 lg:px-8"
               >
