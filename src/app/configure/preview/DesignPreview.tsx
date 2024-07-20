@@ -62,13 +62,13 @@ const DesignPreview = ({ configuration }: { configuration: Configuration }) => {
     },
   });
 
-  const handleCheckout = () => {
+  const handleCheckout = async () => {
     if (user) {
       // Log the user object to verify its structure
       console.log("User object:", user);
       console.log("User ID:", user.id);
       console.log("Configuration ID:", id);
-      createPaymentSession({ configId: id });
+      createPaymentSession({ configId: user.id });
     } else {
       console.log("User not logged in, opening login modal");
       localStorage.setItem("configurationId", id);

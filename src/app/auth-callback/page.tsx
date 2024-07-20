@@ -19,7 +19,7 @@ const Page = () => {
     queryKey: ["auth-callback"],
     queryFn: async () => await getAuthStatus(),
     retry: true,
-    retryDelay: 500,
+    retryDelay: 5000,
   });
 
   if (data?.success) {

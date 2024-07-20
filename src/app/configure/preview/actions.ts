@@ -15,6 +15,7 @@ export const createCheckoutSession = async ({
   const configuration = await db.configuration.findUnique({
     where: { id: configId },
   });
+  
 
   if (!configuration) {
     throw new Error("No such configuration found");
@@ -22,7 +23,7 @@ export const createCheckoutSession = async ({
 
   const { getUser } = getKindeServerSession();
   const user = await getUser();
-  console.log(user);
+  console.log(" from kinde server id:", user);
 
   if (!user) {
     throw new Error("You need to be logged in");
@@ -43,7 +44,8 @@ export const createCheckoutSession = async ({
       configurationId: configuration.id,
     },
   });
-
+  console.log(user.id === configuration.id);
+  
   //console.log(user.id, configuration.id);
 
   if (existingOrder) {
