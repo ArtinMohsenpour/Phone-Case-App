@@ -81,7 +81,7 @@ export default function Home() {
                   />
                   <img
                     className="inline-block h-10 w-10 object-cover rounded-full ring-2 ring-slate-100"
-                    src="/users/user-5.JPG"
+                    src="/users/user-5.jpg"
                     alt="user image5"
                   />
                 </div>
@@ -160,7 +160,7 @@ export default function Home() {
               <div className="flex gap-4 mt-2">
                 <img
                   className="rounded-full h-12 w-12 object-cover"
-                  src="/users/user-5.JPG"
+                  src="/users/user-5.jpg"
                   alt="user image52"
                 />
                 <div className="flex flex-col">
@@ -196,7 +196,7 @@ export default function Home() {
               <div className="flex gap-4 mt-2">
                 <img
                   className="rounded-full h-12 w-12 object-cover"
-                  src="/users/user-4.JPG"
+                  src="/users/user-4.jpg"
                   alt="user image 42"
                 />
                 <div className="flex flex-col">
@@ -243,7 +243,7 @@ export default function Home() {
 
               <div className="relative h-80 md:h-full w-full md:justify-self-end max-w-sm rounded-xl bg-gray-900/5 ring-inset ring-gray-900/10 lg:rounded-2xl">
                 <img
-                  src="/horse.JPG"
+                  src="/horse.jpg"
                   alt="Horse_5"
                   className="rounded-md object-cover bg-white shadow-2xl ring-1 ring-gray-900/10 h-full w-full"
                 />
