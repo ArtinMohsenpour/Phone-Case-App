@@ -69,5 +69,12 @@ export async function POST(req: Request) {
     }
 
     return NextResponse.json({ result: event, ok: true });
-  } catch (err) {}
+  } catch (err) {
+    console.log(err);
+    // send to sentry
+
+    return NextResponse.json({
+      message: ""
+    })
+  }
 }
