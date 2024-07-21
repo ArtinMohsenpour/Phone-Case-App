@@ -66,12 +66,12 @@ export default function Home() {
                   />
                   <img
                     className="inline-block h-10 w-10 rounded-full ring-2 ring-slate-100"
-                    src="/users/user-2.jpg"
+                    src="/users/user-2.JPG"
                     alt="user image2"
                   />
                   <img
                     className="inline-block h-10 w-10 rounded-full ring-2 ring-slate-100"
-                    src="/users/user-3.jpg"
+                    src="/users/user-3.JPG"
                     alt="user image3"
                   />
                   <img
