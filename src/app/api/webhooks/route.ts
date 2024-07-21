@@ -1,6 +1,8 @@
 import { headers } from "next/headers";
 import { stripe } from "@/lib/stripe";
 import Stripe from "stripe";
+import { db } from "@/db";
+import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
@@ -29,13 +31,43 @@ export async function POST(req: Request) {
         orderId: null,
       };
 
-      if(!userId || !orderId) {
-        throw new Error("Invalid request metadata!")
+      if (!userId || !orderId) {
+        throw new Error("Invalid request metadata!");
       }
 
-      
+      const billingAddress = session.customer_details?.address;
+      const shippingAddress = session.shipping_details?.address;
 
+      await db.order.update({
+        where: {
+          id: orderId,
+        },
+        data: {
+          isPaid: true,
+          shippingAddress: {
+            create: {
+              name: session.customer_details!.name!,
+              city: shippingAddress!.city!,
+              country: shippingAddress!.country!,
+              postalCode: shippingAddress!.postal_code!,
+              street: shippingAddress!.line1!,
+              state: shippingAddress!.state!,
+            },
+          },
+          billingAddress: {
+            create: {
+              name: session.customer_details!.name!,
+              city: billingAddress!.city!,
+              country: billingAddress!.country!,
+              postalCode: billingAddress!.postal_code!,
+              street: billingAddress!.line1!,
+              state: billingAddress!.state!,
+            },
+          },
+        },
+      });
     }
 
+    return NextResponse.json({ result: event, ok: true });
   } catch (err) {}
 }
