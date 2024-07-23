@@ -21,6 +21,7 @@ const Page = () => {
     retry: true,
     retryDelay: 500,
   });
+  console.log(data);
 
   if (data?.success) {
     if (configId) {
