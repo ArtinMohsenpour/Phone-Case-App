@@ -196,7 +196,7 @@ export default function Home() {
               <div className="flex gap-4 mt-2">
                 <img
                   className="rounded-full h-12 w-12 object-cover"
-                  src="/users/user-4.jpg"
+                  src="/users/user-4.JPG"
                   alt="user image 42"
                 />
                 <div className="flex flex-col">
